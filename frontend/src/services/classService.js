@@ -1,11 +1,12 @@
 import axiosInstance from "./axiosInstance";
 
-const getClasses = () => {
-  return axiosInstance.get("/classes");
+const getClasses = async () => {
+  try {
+    const response = await axiosInstance.get("/classes");
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
 };
 
-const getClassById = (id) => {
-  return axiosInstance.get(`/classes/${id}`);
-};
-
-export default { getClasses, getClassById };
+export default { getClasses };

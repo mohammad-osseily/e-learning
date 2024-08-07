@@ -7,59 +7,79 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      signup({ name, email, password, phone_number: phoneNumber, navigate })
-    );
+    dispatch(signup({ name, email, password, phone_number, navigate }));
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10">
       <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <input
-        type="text"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-        placeholder="Phone Number"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white py-2 rounded"
-      >
-        Register
-      </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="name">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="password">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="phone_number">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="phone_number"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={phone_number}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+        >
+          Register
+        </button>
+      </form>
+    </div>
   );
 };
 

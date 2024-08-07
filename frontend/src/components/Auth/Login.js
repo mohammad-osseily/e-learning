@@ -9,37 +9,49 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(login({ email, password, navigate }));
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10">
       <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-        className="block w-full p-2 mb-4 border border-gray-300 rounded"
-      />
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white py-2 rounded"
-      >
-        Login
-      </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1" htmlFor="password">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+        >
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 

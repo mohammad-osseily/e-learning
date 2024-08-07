@@ -1,36 +1,27 @@
-import axiosInstance from "../../services/axiosInstance";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { authActions } from "./authSlice";
-import Swal from "sweetalert2";
 
 export const login =
   ({ email, password, navigate }) =>
   async (dispatch) => {
     try {
-      const response = await axiosInstance.post("/users/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("token", response.data.token);
       dispatch(authActions.loginSuccess(response.data));
-      Swal.fire({
-        title: "Success!",
-        text: "Login successful",
-        icon: "success",
-        timer: 3000,
-        showConfirmButton: false,
-      });
+      toast.success("Login successful", { autoClose: 3000 });
       setTimeout(() => {
-        navigate("/");
+        navigate("/home");
       }, 2000);
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Login failed";
-      Swal.fire({
-        title: "Error!",
-        text: errorMessage,
-        icon: "error",
-        timer: 3000,
-        showConfirmButton: false,
-      });
+      toast.error(errorMessage, { autoClose: 3000 });
       dispatch(authActions.loginFail(errorMessage));
     }
   };
@@ -39,7 +30,7 @@ export const signup =
   ({ name, email, password, phone_number, navigate }) =>
   async (dispatch) => {
     try {
-      const response = await axiosInstance.post("/users", {
+      const response = await axios.post("http://localhost:4000/api/users", {
         name,
         email,
         password,
@@ -47,25 +38,15 @@ export const signup =
       });
       localStorage.setItem("token", response.data.token);
       dispatch(authActions.signupSuccess(response.data));
-      Swal.fire({
-        title: "Success!",
-        text: "Signup successful",
-        icon: "success",
-        timer: 3000,
-        showConfirmButton: false,
-      });
+      toast.success("Signup successful", { autoClose: 3000, theme: "colored" });
       setTimeout(() => {
-        navigate("/");
+        navigate("/home");
       }, 2000);
     } catch (err) {
+      console.log(err);
+
       const errorMessage = err.response?.data?.error || "Signup failed";
-      Swal.fire({
-        title: "Error!",
-        text: errorMessage,
-        icon: "error",
-        timer: 3000,
-        showConfirmButton: false,
-      });
+      toast.error(errorMessage, { autoClose: 3000, theme: "colored" });
       dispatch(authActions.signupFail(errorMessage));
     }
   };
@@ -73,11 +54,5 @@ export const signup =
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch(authActions.logout());
-  Swal.fire({
-    title: "Success!",
-    text: "Logout successful",
-    icon: "success",
-    timer: 3000,
-    showConfirmButton: false,
-  });
+  toast.success("Logout successful", { autoClose: 3000 });
 };

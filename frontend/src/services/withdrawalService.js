@@ -1,6 +1,15 @@
 import axiosInstance from "./axiosInstance";
 import Swal from "sweetalert2";
 
+const getWithdrawals = async () => {
+  try {
+    const response = await axiosInstance.get("/withdrawal");
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const createWithdrawal = async (withdrawalData) => {
   try {
     const response = await axiosInstance.post("/withdrawal", withdrawalData);
@@ -26,4 +35,4 @@ const createWithdrawal = async (withdrawalData) => {
   }
 };
 
-export default { createWithdrawal };
+export default { getWithdrawals, createWithdrawal };

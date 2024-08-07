@@ -14,52 +14,53 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <ul className="flex space-x-4">
-        <li>
-          <Link to="/" className="text-white">
-            Home
-          </Link>
-        </li>
-        {!isAuthenticated ? (
-          <>
+    <div className="navbar bg-base-100 shadow-lg flex justify-between">
+      <div className="">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
+          E-Learning
+        </Link>
+      </div>
+      <div className="  justify-center">
+        <ul className="menu menu-horizontal ">
+          {isAuthenticated && (
+            <>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/classes">Classes</Link>
+              </li>
+              <li>
+                <Link to="/enrollments">Manage Enrollments</Link>
+              </li>
+              <li>
+                <Link to="/withdrawals">Manage Withdrawals</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+      <div>
+        <ul className="menu menu-horizontal p-0">
+          {!isAuthenticated ? (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          ) : (
             <li>
-              <Link to="/login" className="text-white">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/register" className="text-white">
-                Register
-              </Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to="/classes" className="text-white">
-                Classes
-              </Link>
-            </li>
-            <li>
-              <Link to="/enroll" className="text-white">
-                Enroll
-              </Link>
-            </li>
-            <li>
-              <Link to="/withdraw" className="text-white">
-                Withdraw
-              </Link>
-            </li>
-            <li>
-              <button onClick={handleLogout} className="text-white">
+              <button onClick={handleLogout} className="btn btn-ghost">
                 Logout
               </button>
             </li>
-          </>
-        )}
-      </ul>
-    </nav>
+          )}
+        </ul>
+      </div>
+    </div>
   );
 };
 
