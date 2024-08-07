@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../services/axiosInstance";
 import { toast } from "react-toastify";
 import { authActions } from "./authSlice";
 
@@ -6,13 +6,10 @@ export const login =
   ({ email, password, navigate }) =>
   async (dispatch) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axiosInstance.post("/users/login", {
+        email,
+        password,
+      });
       localStorage.setItem("token", response.data.token);
       dispatch(authActions.loginSuccess(response.data));
       toast.success("Login successful", { autoClose: 3000 });
@@ -30,7 +27,7 @@ export const signup =
   ({ name, email, password, phone_number, navigate }) =>
   async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:4000/api/users", {
+      const response = await axiosInstance.post("/users", {
         name,
         email,
         password,
