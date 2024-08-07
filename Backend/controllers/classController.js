@@ -62,6 +62,46 @@ export const getClassById = async (req, res) => {
   }
 };
 
+export const getClassesNotEnrolledIn = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Check if the user exists
+    const userExists = await User.findById(userId);
+    if (!userExists) {
+      console.error("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Get all classes
+    const allClasses = await Class.find().populate("instructor", "name email");
+    console.log("All classes:", allClasses);
+
+    // Get all enrollments for the user
+    const userEnrollments = await Enrollment.find({ student: userId }).populate(
+      "class"
+    );
+    console.log("User enrollments:", userEnrollments);
+
+    // Extract the class IDs the user is enrolled in
+    const enrolledClassIds = userEnrollments.map((enrollment) =>
+      enrollment.class._id.toString()
+    );
+    console.log("Enrolled class IDs:", enrolledClassIds);
+
+    // Filter out the classes where the user is already enrolled
+    const classesNotEnrolledIn = allClasses.filter(
+      (classItem) => !enrolledClassIds.includes(classItem._id.toString())
+    );
+    console.log("Classes not enrolled in:", classesNotEnrolledIn);
+
+    res.status(200).json(classesNotEnrolledIn);
+  } catch (error) {
+    console.error("Error getting classes not enrolled in:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const updateClass = async (req, res) => {
   const { id } = req.params;
   const { title, description, instructor } = req.body;

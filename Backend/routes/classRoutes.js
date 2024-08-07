@@ -6,6 +6,7 @@ import {
   getClassesByInstructor,
   updateClass,
   deleteClass,
+  getClassesNotEnrolledIn,
 } from "../controllers/classController.js";
 import { protect, adminProtect } from "../middleware/protectRoutes.js";
 
@@ -14,6 +15,7 @@ const router = express.Router();
 router.post("/", protect, adminProtect, createClass);
 
 router.get("/", protect, getClasses);
+router.get("/notIn/:userId", protect, getClassesNotEnrolledIn);
 
 router.get("/instructor/classes", protect, getClassesByInstructor);
 
