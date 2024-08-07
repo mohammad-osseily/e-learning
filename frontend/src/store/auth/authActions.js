@@ -1,6 +1,6 @@
 import axiosInstance from "../../services/axiosInstance";
-import { toast } from "react-toastify";
 import { authActions } from "./authSlice";
+import Swal from "sweetalert2";
 
 export const login =
   ({ email, password, navigate }) =>
@@ -12,13 +12,25 @@ export const login =
       });
       localStorage.setItem("token", response.data.token);
       dispatch(authActions.loginSuccess(response.data));
-      toast.success("Login successful", { autoClose: 3000 });
+      Swal.fire({
+        title: "Success!",
+        text: "Login successful",
+        icon: "success",
+        timer: 3000,
+        showConfirmButton: false,
+      });
       setTimeout(() => {
-        navigate("/home");
+        navigate("/");
       }, 2000);
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Login failed";
-      toast.error(errorMessage, { autoClose: 3000 });
+      Swal.fire({
+        title: "Error!",
+        text: errorMessage,
+        icon: "error",
+        timer: 3000,
+        showConfirmButton: false,
+      });
       dispatch(authActions.loginFail(errorMessage));
     }
   };
@@ -35,15 +47,25 @@ export const signup =
       });
       localStorage.setItem("token", response.data.token);
       dispatch(authActions.signupSuccess(response.data));
-      toast.success("Signup successful", { autoClose: 3000, theme: "colored" });
+      Swal.fire({
+        title: "Success!",
+        text: "Signup successful",
+        icon: "success",
+        timer: 3000,
+        showConfirmButton: false,
+      });
       setTimeout(() => {
-        navigate("/home");
+        navigate("/");
       }, 2000);
     } catch (err) {
-      console.log(err);
-
       const errorMessage = err.response?.data?.error || "Signup failed";
-      toast.error(errorMessage, { autoClose: 3000, theme: "colored" });
+      Swal.fire({
+        title: "Error!",
+        text: errorMessage,
+        icon: "error",
+        timer: 3000,
+        showConfirmButton: false,
+      });
       dispatch(authActions.signupFail(errorMessage));
     }
   };
@@ -51,5 +73,11 @@ export const signup =
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch(authActions.logout());
-  toast.success("Logout successful", { autoClose: 3000 });
+  Swal.fire({
+    title: "Success!",
+    text: "Logout successful",
+    icon: "success",
+    timer: 3000,
+    showConfirmButton: false,
+  });
 };

@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar"; // Ensure the import path is correct
 import Home from "./components/Home";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
@@ -21,9 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/classes" element={<PrivateRoute component={ClassList} />} />
       <Route
         path="/classes/:id"
@@ -49,7 +49,6 @@ function App() {
   return (
     <RouterProvider router={router}>
       <div className="App">
-        <Navbar />
         <div className="container mx-auto px-4">
           <ToastContainer position="top-right" />
         </div>
