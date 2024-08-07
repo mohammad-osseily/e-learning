@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import classService from "../../services/classService";
 import enrollmentService from "../../services/enrollmentService";
 import Swal from "sweetalert2";
@@ -6,6 +7,7 @@ import Swal from "sweetalert2";
 const ClassList = () => {
   const [classes, setClasses] = useState([]);
   const [enrollmentStatus, setEnrollmentStatus] = useState({});
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -22,7 +24,10 @@ const ClassList = () => {
 
   const handleEnroll = async (classId) => {
     try {
-      await enrollmentService.createEnrollment({ class: classId });
+      await enrollmentService.createEnrollment({
+        student: user._id,
+        class: classId,
+      });
       setEnrollmentStatus((prevStatus) => ({
         ...prevStatus,
         [classId]: "enrolled",
